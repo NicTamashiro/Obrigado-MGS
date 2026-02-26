@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Obrigado – MGS Containers</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0d1b2e;
+      --accent: #4a90d9;
+      --white: #ffffff;
+      --steel: #8fa8c4;
+      --text-muted: #7a9ab8;
+    }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      overflow: hidden;
+    }
+
+    /* grid background */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(74,144,217,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74,144,217,0.06) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: gridMove 20s linear infinite;
+    }
+    @keyframes gridMove {
+      0%   { background-position: 0 0; }
+      100% { background-position: 60px 60px; }
+    }
+
+    /* glow */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(74,144,217,0.1) 0%, transparent 70%);
+      z-index: 0;
+    }
+
+    .card {
+      position: relative; z-index: 1;
+      max-width: 520px;
+      animation: fadeUp .7s ease both;
+    }
+
+    /* check icon */
+    .check-wrap {
+      position: relative;
+      width: 90px; height: 90px;
+      margin: 0 auto 32px;
+    }
+    .check-ring {
+      position: absolute; inset: 0; border-radius: 50%;
+      border: 2px solid var(--accent);
+      animation: pulse 2.5s 0.8s ease-out infinite;
+    }
+    @keyframes pulse {
+      0%   { transform: scale(1); opacity: .7; }
+      100% { transform: scale(1.8); opacity: 0; }
+    }
+    .check-circle {
+      position: relative; z-index: 1;
+      width: 90px; height: 90px; border-radius: 50%;
+      background: rgba(74,144,217,0.12);
+      border: 2px solid rgba(74,144,217,0.35);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .check-circle svg {
+      width: 42px; height: 42px;
+    }
+    .check-circle svg path {
+      fill: none; stroke: var(--accent);
+      stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+      stroke-dasharray: 55; stroke-dashoffset: 55;
+      animation: draw .5s .3s ease forwards;
+    }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+
+    .label {
+      font-size: 12px; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 12px;
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(51px, 10vw, 88px);
+      line-height: .95; letter-spacing: .03em;
+      margin-bottom: 17px;
+    }
+    h1 span { color: var(--accent); }
+
+    p {
+      font-size: 17px; font-weight: 300;
+      color: var(--steel); line-height: 1.65;
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 36px; border-radius: 4px;
+      background: var(--accent); color: var(--white);
+      font-family: 'Barlow', sans-serif; font-weight: 600; font-size: 15px;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background .25s, transform .25s, box-shadow .25s;
+    }
+    .btn:hover {
+      background: #5aa0e8;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(74,144,217,0.35);
+    }
+
+    .countdown {
+      margin-top: 24px;
+      font-size: 13px; color: var(--text-muted);
+    }
+    .countdown span { color: var(--accent); font-weight: 600; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+
+    <div class="check-wrap">
+      <div class="check-ring"></div>
+      <div class="check-circle">
+        <svg viewBox="0 0 48 48">
+          <path d="M10 25 L20 35 L38 15"/>
+        </svg>
+      </div>
+    </div>
+
+    <p class="label">Mensagem recebida</p>
+
+    <h1>Obrigado pelo<br><span>Contato!</span></h1>
+
+    <p>Nossa equipe entrará em contato em breve.<br>Fique à vontade para nos chamar pelo WhatsApp.</p>
+
+    <a href="#" class="btn">← Voltar ao site</a>
+
+    <p class="countdown">Redirecionando em <span id="timer">10</span>s...</p>
+
+  </div>
+
+  <script>
+    let s = 10;
+    const el = document.getElementById('timer');
+    const iv = setInterval(() => {
+      el.textContent = --s;
+      if (s <= 0) { clearInterval(iv); window.location.href = '#'; }
+    }, 1000);
+  </script>
+</body>
+</html>
